@@ -1,0 +1,22 @@
+pipeline {
+    agent any 
+    stages {
+        stage('codecheckout') {
+            steps {
+                git 'https://github.com/lalitvchau/sonarproject.git'
+            }
+        }
+        stage('code quality') {
+            steps {
+                script {
+                    def scannerHome = tool 'sonarscanner';
+                
+                    withSonarQubeEnv(credentialsId: 'd2e71e9adaad85c77692548ae910bf33270a8493') 
+                    {
+                        sh "${scannerHome}/bin/sonar-scanner -D sonar.projectKey=javapipeline"
+                    }
+                }
+            }
+        }
+    }
+}
