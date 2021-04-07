@@ -7,7 +7,8 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sh 'mvn package'
+                git 'https://github.com/lalitvchau/StudentsRESTfulWithClient.git'
+                sh 'mvn clean install -f StudentWebServiceProject/pom.xml'
                 sh 'cp target/JenkinsWar.war /var/lib/tomcat9/webapps'
             }
         }
